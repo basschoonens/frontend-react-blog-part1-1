@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: rgb(44,47,57);
+    color: white;
+}
+
+.home-link {
+    color: white;
+    text-decoration: none;
+    margin-top: 20px;
+    border-bottom: white 1px solid;
+}
