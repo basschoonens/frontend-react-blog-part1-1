@@ -7,6 +7,7 @@ import Home from "./pages/home/Home.jsx";
 import NewPost from "./pages/newPost/NewPost.jsx";
 import Overview from "./pages/overview/Overview.jsx";
 import NotFound from "./pages/notFound/NotFound.jsx";
+import Posts from "./pages/posts/Posts.jsx";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/newpost" element={<NewPost/>}/>
+                <Route path="/posts/:id" element={<Posts/>}/>
                 <Route path="/overview" element={<Overview/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
