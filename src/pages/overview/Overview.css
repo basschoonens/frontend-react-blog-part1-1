@@ -5,6 +5,7 @@
 }
 
 .overview-container {
+    border: solid 1px green;
     display: flex;
     flex-direction: column;
 
