@@ -5,6 +5,7 @@
 }
 
 .new-post {
+    border: solid 1px red;
     display: flex;
     flex-direction: column;
 
@@ -17,6 +18,7 @@
 }
 
 .new-post-container {
+    border: solid 1px green;
     display: flex;
     flex-direction: column;
 
