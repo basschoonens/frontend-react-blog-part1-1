@@ -1,6 +1,7 @@
 import './Overview.css';
 import posts from "../../constants/data.json";
 
+
 export default function Overview() {
 
     return (
@@ -10,7 +11,14 @@ export default function Overview() {
                 <ul className="overview-posts">
                     {posts.map((post) => (
                         <li key={post.id}>
-                            <h2>{post.title}</h2>
+                            <div className="post-overview-container">
+                                <div className="post-title-author">
+                                    <h2>{post.title}</h2><h2>{post.author}</h2>
+                                </div>
+                                <div className="post-details">
+                                <p>{post.comments} reacties</p>-<p>{post.shares} keer gedeeld.</p>
+                                </div>
+                            </div>
                         </li>
                     ))}
                 </ul>
