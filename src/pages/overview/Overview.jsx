@@ -1,28 +1,38 @@
 import './Overview.css';
 import posts from "../../constants/data.json";
-
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 export default function Overview() {
 
+
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        async function fetchAllPosts() {
+            try {
+                const result = await axios.get('http://localhost:3000/posts');
+                console.log(result.data)
+                setPosts(result.data);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        fetchAllPosts();
+
+    }, []);
+
+
     return (
-        <div className="overview">
-            <div className="overview-container">
-                <h1>Bekijk alle {posts.length} posts op het platform.</h1>
-                <ul className="overview-posts">
-                    {posts.map((post) => (
-                        <li key={post.id}>
-                            <div className="post-overview-container">
-                                <div className="post-title-author">
-                                    <h2>{post.title}</h2><h2>{post.author}</h2>
-                                </div>
-                                <div className="post-details">
-                                <p>{post.comments} reacties</p>-<p>{post.shares} keer gedeeld.</p>
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
+        <>
+            <h1>App</h1>
+            <ul>
+                {posts.map((post) => (
+                    <li key={post.id}>{post.title}</li>
+                ))
+                }
+            </ul>
+        </>
     )
 }

@@ -3,13 +3,15 @@ import {useState} from "react";
 import {useForm} from "react-hook-form";
 import readTime from "../../helpers/readTime.js";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 export default function NewPost() {
-        const {register, handleSubmit, formState: {errors}} = useForm();
-        const navigate = useNavigate();
-        const [isSuccess, setIsSuccess] = useState(false);
 
-    function handleFormSubmit(data) {
+    const {register, handleSubmit, formState: {errors}} = useForm();
+    const navigate = useNavigate();
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    async function handleFormSubmit(data) {
         const dateCreated = new Date().toISOString();
         const comments = 0;
         const shares = 0;
@@ -22,15 +24,19 @@ export default function NewPost() {
             shares
         }
 
-        console.log(enrichedData);
+        try {
+            await axios.post('http://localhost:3000/posts', enrichedData);
 
-        setIsSuccess(true);
 
-        setTimeout(() => {
-            setIsSuccess(false);
-            navigate("/Overview")
-        }, 3000);
+            setIsSuccess(true);
 
+            setTimeout(() => {
+                setIsSuccess(false);
+                navigate("/overview")
+            }, 3000);
+        } catch (error) {
+            console.log('error creating post', error);
+        }
     }
 
     return (
@@ -62,7 +68,7 @@ export default function NewPost() {
                     {errors.author && <p>Author is required</p>}
                     <label htmlFor="blogpost">Blogpost</label>
                     <textarea rows={10} cols={50}
-                        {...register("blogpost", {required: true, minLength: 300, maxLength: 2000})}
+                              {...register("blogpost", {required: true, minLength: 300, maxLength: 2000})}
                     />
                     {errors.blogpost && errors.blogpost.type === "required" && (
                         <p>Blogpost is required</p>
@@ -73,9 +79,9 @@ export default function NewPost() {
                     {errors.blogpost && errors.blogpost.type === "maxLength" && (
                         <p>Blogpost cannot exceed 2000 characters</p>
                     )}
-    <button type="submit">Toevoegen</button>
-    </form>
-    </div>
-    </div>
+                    <button type="submit">Toevoegen</button>
+                </form>
+            </div>
+        </div>
     )
 }
