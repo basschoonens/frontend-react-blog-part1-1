@@ -12,14 +12,14 @@ export default function NewPost() {
     const [isSuccess, setIsSuccess] = useState(false);
 
     async function handleFormSubmit(data) {
-        const dateCreated = new Date().toISOString();
+        const created = new Date().toISOString();
         const comments = 0;
         const shares = 0;
 
         const enrichedData = {
             ...data,
-            dateCreated,
-            readTime: readTime(data.blogpost),
+            created,
+            readTime: readTime(data.content),
             comments,
             shares
         }
@@ -68,7 +68,7 @@ export default function NewPost() {
                     {errors.author && <p>Author is required</p>}
                     <label htmlFor="blogpost">Blogpost</label>
                     <textarea rows={10} cols={50}
-                              {...register("blogpost", {required: true, minLength: 300, maxLength: 2000})}
+                              {...register("content", {required: true, minLength: 300, maxLength: 2000})}
                     />
                     {errors.blogpost && errors.blogpost.type === "required" && (
                         <p>Blogpost is required</p>

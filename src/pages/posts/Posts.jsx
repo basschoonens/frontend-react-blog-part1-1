@@ -1,27 +1,33 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './Posts.css';
-import posts from "../../constants/data.json";
 import {useParams, useNavigate, Link} from 'react-router-dom';
 import {dateFormat} from "../../helpers/dateFormat.js";
+import axios from "axios";
 
 export default function Posts() {
-    const { id } = useParams();
+    const {id} = useParams();
     const navigate = useNavigate();
     const [post, setPost] = useState(null);
 
     useEffect(() => {
-        const foundPost = posts.find(post => post.id.toString() === id);
-        if (!foundPost) {
-            navigate("/NotFound");
-        } else {
-            setPost(foundPost);
+        async function fetchPost() {
+            try {
+                const response = await axios.get(`http://localhost:3000/posts/${id}`);
+                setPost(response.data);
+            } catch (error) {
+                console.error('Error fetching post:', error);
+                navigate("/NotFound");
+            }
         }
+
+        fetchPost();
     }, [id, navigate]);
 
     if (!post) {
         return null;
     }
+
 
     return (
         <div className="single-post">
